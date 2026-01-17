@@ -11,33 +11,28 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# Recommended: SECRET_KEY = os.environ["SECRET_KEY"]
 SECRET_KEY = 'django-insecure-+=i^s!6ow-#m@k0kf*pi_yeaaoof9$b4s!i4x$9h6va+xkcxvb'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-# IMPORTANT:
-# ALLOWED_HOSTS must contain ONLY hostnames (no scheme, no trailing slash).
+# Hostnames only (no https:// and no trailing slash)
 ALLOWED_HOSTS = [
     "djangoprojectapp-36a8ea385eb0.herokuapp.com",
-    ".herokuapp.com",
-    "127.0.0.1",
     "localhost",
+    "127.0.0.1",
 ]
 
-# Recommended when deploying behind HTTPS (Heroku)
+# Needed for POSTs/forms/admin when running behind HTTPS
 CSRF_TRUSTED_ORIGINS = [
     "https://djangoprojectapp-36a8ea385eb0.herokuapp.com",
 ]
 
-# Application definition
+# Heroku runs behind a proxy; this makes Django treat requests as HTTPS correctly
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,8 +74,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'my_project.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -88,8 +81,6 @@ DATABASES = {
     }
 }
 
-# Password validation
-# https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -97,18 +88,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.2/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
